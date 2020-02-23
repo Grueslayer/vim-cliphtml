@@ -1,0 +1,102 @@
+﻿*cliphtml.txt* Copy buffer as HTML to system clipboard.
+*cliphtml*
+
+by Jan Stocker~
+
+==============================================================================
+TOC                                                          *cliphtml-contents*
+
+  INTRO .......................... |cliphtml-intro|
+  PREREQUISITES .................. |cliphtml-prerequisites|
+  OPTIONS ........................ |cliphtml-options|
+  COMMANDS ....................... |cliphtml-commands|
+  CREDITS ........................ |cliphtml-credits|
+  LICENSE ........................ |cliphtml-license|
+
+==============================================================================
+INTRO                                                           *cliphtml-intro*
+
+Copy the (visual selected) color rendered text from a VIM buffer to the system
+clipboard.
+
+==============================================================================
+PREREQUISITES                                           *cliphtml-prerequisites*
+
+This plugin uses the default installed script `syntax/2html.vim` (|:TOhtml|)
+to convert the content to HTML.
+
+For Windows systems you additionally need a python installation accessible
+from VIM (see |python|).
+
+For Un*x like systems the application `xclip` will be used by default to copy
+the content to the system clipboard.
+
+MacOS X already comes with the needed tools (`textutil` and `pbcopy`).
+
+==============================================================================
+OPTIONS                                                       *cliphtml-options*
+
+You can change the behaviour by changing the value of following variables to
+your needs into your vimrc.
+
+------------------------------------------------------------------------------
+                                                    *g:cliphtml_toclipboard_cmd*
+
+This command will be used to write the content of the converted HTML buffer to
+the system clipboard.
+
+The following defaults are used:
+
+Win32: `""` (Python is used)
+MacOS: `"write !textutil -stdin -stdout -format html -convert rtf | pbcopy"`
+Un*x:  `"write !xclip -t text/html -selection clipboard"`
+
+------------------------------------------------------------------------------
+                                                     *g:cliphtml_tohtml_options*
+
+Contains a hash array of global variables to change the bahaviour of |:TOhtml|
+explicit for this function. The previous values will be restored after
+creating the content.
+
+Example:
+>
+let g:cliphtml_tohtml_options = {
+	\ 'g:html_ignore_folding' : 1,
+	\ 'g:html_number_lines' : 1,
+	\ 'g:html_font' : ['consolas','verdana']
+	\ }
+
+==============================================================================
+COMMANDS                                                     *cliphtml-commands*
+                                                                     *:ClipHtml*
+>
+    :[range]ClipHtml
+<
+Converts the actual buffer (or a given range of lines) using |:TOhtml| to a
+new buffer. The HTML from the newly created buffer will be copied using the
+command given in |g:cliphtml_toclipboard_cmd| to the system
+clipboard.
+
+==============================================================================
+CREDITS                                                       *cliphtml-credits*
+
+Following code is used by this project:
+
+`HTMLClipboard.py` - https://gist.github.com/Erreinion/6691093
+Python code to access Win32 clipboard. Revised version of Phillip Piper's
+original post under http://code.activestate.com/recipes/474121.
+
+
+This project is based on the work of:
+
+Scott Graham 
+(https://github.com/sgraham/sgraham/blob/master/vimfiles/plugin/cliphtml.vim)
+
+==============================================================================
+LICENSE                                                       *cliphtml-license*
+
+This project is licensed under the MIT License - see the LICENSE.md file for
+details.
+
+==============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:
