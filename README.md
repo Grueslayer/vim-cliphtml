@@ -57,7 +57,7 @@ let g:cliphtml_tohtml_options = {
 
 ## Built With
 
-* [HTMLClipboard.py](https://gist.github.com/Erreinion/6691093) - Python code to access Win32 clipboard. Revised version of Phillip Piper's original [post](http://code.activestate.com/recipes/474121).
+* [HtmlClipboard.py](https://gist.github.com/Erreinion/6691093) - Python code to access Win32 clipboard. Revised version of Phillip Piper's original [post](http://code.activestate.com/recipes/474121).
 
 ## Authors
 

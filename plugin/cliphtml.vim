@@ -22,7 +22,8 @@
 "
 
 if ((has('win32') || has('win64')) && has('pythonx'))
-	exec 'pyxfile '.fnamemodify(resolve(expand('<sfile>:p')), ':h').'/HTMLClipboard.py'
+	let s:FuncBufferToHtmlClipboardWin32 = 1
+	exec 'pyxfile '.fnamemodify(resolve(expand('<sfile>:p')), ':h').'/HtmlClipboard.py'
 	function! s:BufferToHtmlClipboardWin32()
 pythonx <<ENDOFPYTHON
 import vim
@@ -39,26 +40,26 @@ function! s:ConvertAndClipAsHtml(line1, line2)
 	let l:savedVariables = {}
 	let l:unsetVariables = []
 
-    if exists('g:cliphtml_tohtml_options')
-    	let l:keys = keys(g:cliphtml_tohtml_options)
-    	for l:key in l:keys
-    		if exists(l:key)
+	if exists('g:cliphtml_tohtml_options')
+		let l:keys = keys(g:cliphtml_tohtml_options)
+		for l:key in l:keys
+			if exists(l:key)
 				let l:savedVariables[l:key] = eval(l:key)
 			else
 				call add(l:unsetVariables, l:key)
 			endif
-    		execute('let '.l:key.'='.string(g:cliphtml_tohtml_options[l:key]))
+			execute('let '.l:key.'='.string(g:cliphtml_tohtml_options[l:key]))
 		endfor
 	endif
 	
 	let g:html_start_line = min([a:line1,a:line2])
 	let g:html_end_line =  max([a:line1,a:line2])
 
-    runtime syntax/2html.vim
-
-    if exists('g:cliphtml_toclipboard_cmd') && !empty(g:cliphtml_toclipboard_cmd)
+	runtime syntax/2html.vim
+	
+	if exists('g:cliphtml_toclipboard_cmd') && !empty(g:cliphtml_toclipboard_cmd)
 		execute(g:cliphtml_toclipboard_cmd)
-	elseif exists("*BufferToHtmlClipboardWin32")
+	elseif exists("s:FuncBufferToHtmlClipboardWin32")
 		call <SID>BufferToHtmlClipboardWin32()
 	elseif has('mac')
 		write !textutil -stdin -stdout -format html -convert rtf | pbcopy
@@ -68,10 +69,10 @@ function! s:ConvertAndClipAsHtml(line1, line2)
 		echoerr 'Clipboard application not found'
 	endif
 
-    bdelete!
+	bdelete!
 
-    unlet g:html_start_line
-    unlet g:html_end_line
+	unlet g:html_start_line
+	unlet g:html_end_line
 
 	let l:keys = keys(l:savedVariables)
 	for l:key in l:keys

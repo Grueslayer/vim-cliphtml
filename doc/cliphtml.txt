@@ -82,7 +82,7 @@ CREDITS                                                       *cliphtml-credits*
 
 Following code is used by this project:
 
-`HTMLClipboard.py` - https://gist.github.com/Erreinion/6691093
+`HtmlClipboard.py` - https://gist.github.com/Erreinion/6691093
 Python code to access Win32 clipboard. Revised version of Phillip Piper's
 original post under http://code.activestate.com/recipes/474121.
 

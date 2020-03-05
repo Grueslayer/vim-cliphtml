@@ -146,7 +146,8 @@ class HtmlClipboard:
             try:
                 win32clipboard.OpenClipboard(0)
                 src = win32clipboard.GetClipboardData(self.GetCfHtml())
-                src = src.decode("UTF-8")
+                if (sys.version_info > (3, 0)):
+                    src = src.decode("UTF-8")
                 #print(src)
                 self.DecodeClipboardSource(src)
                 
@@ -262,7 +263,8 @@ class HtmlClipboard:
             win32clipboard.OpenClipboard(0)
             win32clipboard.EmptyClipboard()
             src = self.EncodeClipboardSource(html, fragmentStart, fragmentEnd, selectionStart, selectionEnd, source)
-            src = src.encode("UTF-8")
+            if (sys.version_info > (3, 0)):
+                src = src.encode("UTF-8")
             #print(src)
             win32clipboard.SetClipboardData(self.GetCfHtml(), src)
         finally:
