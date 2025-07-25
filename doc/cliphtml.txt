@@ -59,12 +59,43 @@ explicit for this function. The previous values will be restored after
 creating the content.
 
 Example:
+
 >
-let g:cliphtml_tohtml_options = {
-	\ 'g:html_ignore_folding' : 1,
-	\ 'g:html_number_lines' : 1,
-	\ 'g:html_font' : ['consolas','verdana']
-	\ }
+    let g:cliphtml_tohtml_options = {
+      \ 'g:html_ignore_folding' : 1,
+      \ 'g:html_number_lines' : 1,
+      \ 'g:html_font' : ['consolas','verdana']
+      \ }
+<
+
+------------------------------------------------------------------------------
+                                                         *g:cliphtml_tohtml_pre*
+
+Function which is called before :TOhtml is executed.
+For neovim set all options to display it as it should be rendered as html.
+The function has one argument holding a hash table for saving values to access
+in the post callback later.
+
+>
+    vim.g.cliphtml_tohtml_pre = function(savedvars)
+      require "ibl".setup_buffer(vim.fn.bufnr(), { enabled = false })
+      savedvars.list = vim.opt_local.list
+      vim.opt_local.list = false
+    end
+<
+
+------------------------------------------------------------------------------
+                                                        *g:cliphtml_tohtml_post*
+
+Function which is called after :TOhtml is executed to reset all options to the
+previous values.
+
+>
+    vim.g.cliphtml_tohtml_post = function(savedvars)
+      require "ibl".setup_buffer(vim.fn.bufnr(), { enabled = true })
+      vim.opt_local.list = savedvars.list
+    end
+<
 
 ==============================================================================
 COMMANDS                                                     *cliphtml-commands*

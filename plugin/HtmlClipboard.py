@@ -69,23 +69,23 @@ class HtmlClipboard:
         "SourceURL:%s\r\n"
 
     MARKER_BLOCK_EX = \
-        "Version:(\S+)\s+" \
-        "StartHTML:(\d+)\s+" \
-        "EndHTML:(\d+)\s+" \
-        "StartFragment:(\d+)\s+" \
-        "EndFragment:(\d+)\s+" \
-        "StartSelection:(\d+)\s+" \
-        "EndSelection:(\d+)\s+" \
-        "SourceURL:(\S+)"
+        "Version:(\\S+)\\s+" \
+        "StartHTML:(\\d+)\\s+" \
+        "EndHTML:(\\d+)\\s+" \
+        "StartFragment:(\\d+)\\s+" \
+        "EndFragment:(\\d+)\\s+" \
+        "StartSelection:(\\d+)\\s+" \
+        "EndSelection:(\\d+)\\s+" \
+        "SourceURL:(\\S+)"
     MARKER_BLOCK_EX_RE = re.compile(MARKER_BLOCK_EX)
 
     MARKER_BLOCK = \
-        "Version:(\S+)\s+" \
-        "StartHTML:(\d+)\s+" \
-        "EndHTML:(\d+)\s+" \
-        "StartFragment:(\d+)\s+" \
-        "EndFragment:(\d+)\s+" \
-           "SourceURL:(\S+)"
+        "Version:(\\S+)\\s+" \
+        "StartHTML:(\\d+)\\s+" \
+        "EndHTML:(\\d+)\\s+" \
+        "StartFragment:(\\d+)\\s+" \
+        "EndFragment:(\\d+)\\s+" \
+        "SourceURL:(\\S+)"
     MARKER_BLOCK_RE = re.compile(MARKER_BLOCK)
 
     DEFAULT_HTML_BODY = \
